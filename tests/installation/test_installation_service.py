@@ -6,7 +6,7 @@ import pytest
 
 @unittest.mock.patch("subprocess.Popen")
 def test_clear_netboot(popen_mock):
-    from controller.installation.service import clear_netboot, CLEAR_NETBOOT_CMD
+    from controller.installation.service import CLEAR_NETBOOT_CMD, clear_netboot
 
     popen_mock.return_value.communicate.return_value = "All good here", ""
     popen_mock.return_value.returncode = 0
@@ -25,7 +25,7 @@ def test_clear_netboot(popen_mock):
 
 @unittest.mock.patch("subprocess.Popen")
 def test_clear_netboot_error(popen_mock):
-    from controller.installation.service import clear_netboot, CLEAR_NETBOOT_CMD
+    from controller.installation.service import CLEAR_NETBOOT_CMD, clear_netboot
 
     t_output = "THIS IS BAD"
     popen_mock.return_value.communicate.return_value = t_output, ""
