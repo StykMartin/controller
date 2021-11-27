@@ -1,11 +1,11 @@
-name: Python package
+name: Pipeline
 
 on:
   - push
   - pull_request
 
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -24,3 +24,13 @@ jobs:
         pip install tox tox-gh-actions
     - name: Test with tox
       run: tox
+    - name: Run coveralls-python
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COVERALLS_FLAG_NAME: python-${{ matrix.python-version }}
+        COVERALLS_PARALLEL: true
+      run: |
+        pip install --upgrade pip
+        pip install --upgrade setuptools
+        pip install --upgrade coveralls==3.2.0
+        coveralls --service=github
