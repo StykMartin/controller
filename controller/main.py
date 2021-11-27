@@ -1,7 +1,9 @@
+"""Entry point for API/PROXY"""
+
 import time
 from urllib.request import Request
 
-import uvicorn as uvicorn
+import uvicorn
 from fastapi import FastAPI
 
 from controller.api import api_router
@@ -17,6 +19,8 @@ app.include_router(api_router)
 
 @app.middleware("http")
 async def add_headers(request: Request, call_next):
+    """Expose process time in each request."""
+
     start_time = time.time()
     response = await call_next(request)
     process_time = time.time() - start_time
