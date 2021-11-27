@@ -1,3 +1,5 @@
+"""Configuration for Controller"""
+
 from starlette.config import Config
 
 config = Config("/etc/beaker/labcontroller.conf")
@@ -25,7 +27,7 @@ CONSOLE_LOGS = config("BEAKER_CONSOLE_LOGS", default="/var/consoles")
 # Regex pattern to use to find panics
 PANIC_REGEX = config(
     "BEAKER_PANIC_REGEX",
-    default="Kernel panic|Oops[\s:[]|general protection fault(?! ip:)|general protection handler: wrong gs|\(XEN\) "
+    default="Kernel panic|Oops[\\s:[]|general protection fault(?! ip:)|general protection handler: wrong gs|\\(XEN\\) "
             "Panic|kernel BUG at .+:[0-9]+!",
 )
 
