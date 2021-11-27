@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from starlette.responses import Response
 from starlette.status import HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 
-from controller.installation.service import clear_netboot
+from controller.installation import service as installation_service
 
 installation_router = APIRouter()
 
@@ -11,7 +11,7 @@ installation_router = APIRouter()
 def get_no_pxe(fqdn: str):
     """Called from kickstart post section to remove netboot entry."""
     try:
-        clear_netboot(fqdn)
+        installation_service.clear_netboot(fqdn)
     except RuntimeError:
         raise HTTPException(
             status_code=HTTP_400_BAD_REQUEST,

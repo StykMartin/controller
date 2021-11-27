@@ -8,7 +8,7 @@ CLEAR_NETBOOT_BIN = "/usr/bin/beaker-clear-netboot"
 CLEAR_NETBOOT_CMD = f"sudo {CLEAR_NETBOOT_BIN} {{fqdn}}"
 
 
-def clear_netboot(fqdn: str):
+def clear_netboot(fqdn: str) -> None:
     """Remove netboot configuration for given FQDN."""
 
     logger.debug('clear_netboot %s', fqdn)
