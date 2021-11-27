@@ -1,0 +1,9 @@
+[report]
+skip_covered = True
+show_missing = True
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    def __repr__
+omit =
+    controller/config.py
