@@ -4,10 +4,13 @@ from starlette.config import Config
 
 config = Config("/etc/beaker/labcontroller.conf")
 
+pid_file = "/var/run/beaker-lab-controller/beaker-{service}.pid"
+
 # Process pid file.
-PROXY_PID_FILE = config(
-    "BEAKER_PROXY_PID_FILE", default="/var/run/beaker-lab-controller/beaker-proxy.pid"
-)
+PROXY_PID_FILE = config("BEAKER_PROXY_PID_FILE", default=pid_file.format(service="proxy"))
+WATCHDOG_PID_FILE = config("BEAKER_WATCHDOG_PID_FILE", default=pid_file.format(service="watchdog"))
+TRANSFER_PID_FILE = config("BEAKER_TRANSFER_PID_FILE", default=pid_file.format(service="transfer"))
+PROVISION_PID_FILE = config("BEAKER_PROVISION_PID_FILE", default=pid_file.format(service="provision"))
 
 # Location of locally stored netboot files
 TFTP_ROOT = config("BEAKER_TFTP_ROOT", default="/var/lib/tftpboot")
@@ -30,8 +33,7 @@ CONSOLE_LOGS = config("BEAKER_CONSOLE_LOGS", default="/var/consoles")
 # Regex pattern to use to find panics
 PANIC_REGEX = config(
     "BEAKER_PANIC_REGEX",
-    default="Kernel panic|Oops[\\s:[]|general protection fault(?! ip:)|general protection handler: wrong gs|\\(XEN\\) "
-            "Panic|kernel BUG at .+:[0-9]+!",
+    default="Kernel panic|Oops[\\s:[]|general protection fault(?! ip:)|general protection handler: wrong gs|\\(XEN\\) Panic|kernel BUG at .+:[0-9]+!",
 )
 
 # Regex pattern which matches OS major names which do not support x86 EFI
