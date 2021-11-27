@@ -27,6 +27,7 @@ async def add_headers(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
     return response
 
+
 if __name__ == "__main__":
     uvicorn.run(  # pragma: no cover
         f"{__name__}:app", host="127.0.0.1", port=8000, use_colors=True, reload=False

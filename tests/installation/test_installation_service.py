@@ -18,7 +18,7 @@ def test_clear_netboot(popen_mock):
     popen_mock.assert_called_once_with(
         CLEAR_NETBOOT_CMD.format(fqdn=t_fqdn).split(),
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT
+        stderr=subprocess.STDOUT,
     )
     popen_mock.return_value.communicate.assert_called()
 
@@ -40,6 +40,6 @@ def test_clear_netboot_error(popen_mock):
     popen_mock.assert_called_once_with(
         CLEAR_NETBOOT_CMD.format(fqdn=t_fqdn).split(),
         stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT
+        stderr=subprocess.STDOUT,
     )
     popen_mock.return_value.communicate.assert_called()

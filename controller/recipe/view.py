@@ -73,11 +73,15 @@ def get_task_result_logs(recipe_id: int, task_id: int, result_id):
     pass
 
 
-@recipe_router.get("/{recipe_id}/tasks/{task_id}/results/{result_id:int}/logs/{path:path}")
+@recipe_router.get(
+    "/{recipe_id}/tasks/{task_id}/results/{result_id:int}/logs/{path:path}"
+)
 def get_task_result_log(recipe_id: int, task_id: int, result_id, path):
     pass
 
 
-@recipe_router.put("/{recipe_id}/tasks/{task_id}/results/{result_id:int}/logs/{path:path}")
+@recipe_router.put(
+    "/{recipe_id}/tasks/{task_id}/results/{result_id:int}/logs/{path:path}"
+)
 def put_task_result_log(recipe_id: int, task_id: int, result_id, path):
     pass
