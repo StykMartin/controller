@@ -16,9 +16,7 @@ def clear_netboot(fqdn: str) -> None:
     fqdn_command = CLEAR_NETBOOT_CMD.format(fqdn=fqdn)
     full_command = shlex.split(fqdn_command)
 
-    process = subprocess.Popen(
-        full_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-    )
+    process = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     output, _ = process.communicate()
 
     if process.returncode:
