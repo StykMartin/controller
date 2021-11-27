@@ -8,7 +8,6 @@ from controller.api import api_router
 
 app = FastAPI(
     title="Controller",
-    version="4.2.0",
     swagger_ui_oauth2_redirect_url=None,
     description="Beaker controller",
 )
