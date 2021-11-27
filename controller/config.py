@@ -9,6 +9,9 @@ PROXY_PID_FILE = config(
     "BEAKER_PROXY_PID_FILE", default="/var/run/beaker-lab-controller/beaker-proxy.pid"
 )
 
+# Location of locally stored netboot files
+TFTP_ROOT = config("BEAKER_TFTP_ROOT", default="/var/lib/tftpboot")
+
 # How long to sleep between polls.
 SLEEP_TIME = config("BEAKER_POOL_SLEEP_TIME", cast=int, default=20)
 
