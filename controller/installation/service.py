@@ -8,9 +8,11 @@ logger = logging.getLogger(__name__)
 CLEAR_NETBOOT_BIN = "/usr/bin/beaker-clear-netboot"
 CLEAR_NETBOOT_CMD = f"sudo {CLEAR_NETBOOT_BIN} {{fqdn}}"
 
-VALID_FQDN_REGEX = (r"^(?=.{1,255}$)[0-9A-Za-z]"
-                    r"(?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z]"
-                    r"(?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?)*\.?$")
+VALID_FQDN_REGEX = (
+    r"^(?=.{1,255}$)[0-9A-Za-z]"
+    r"(?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z]"
+    r"(?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?)*\.?$"
+)
 # do this at the global scope to avoid compiling it on every call
 regex_compiled = re.compile(VALID_FQDN_REGEX)
 
