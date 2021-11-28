@@ -60,6 +60,7 @@ jobs:
         tox_env:
           - black
           - bandit
+          - isort
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
