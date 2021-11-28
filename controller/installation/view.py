@@ -1,3 +1,6 @@
+import logging
+import typing
+
 from fastapi import APIRouter, HTTPException
 from starlette.responses import Response
 from starlette.status import HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
@@ -5,6 +8,8 @@ from starlette.status import HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 from controller.installation import service as installation_service
 
 installation_router = APIRouter()
+
+logger = logging.getLogger(__name__)
 
 BROKEN_NETBOOT = HTTPException(
     status_code=HTTP_400_BAD_REQUEST,
@@ -29,26 +34,47 @@ def get_no_pxe(fqdn: str):
 
 
 @installation_router.get("/install_start/{recipe_id}")
-def get_install_start(recipe_id: int):
-    pass
+def get_install_start(recipe_id: int = None):
+
+    logger.debug(f"install_start recipe_id=%s", recipe_id)
+
+    response = installation_service.installation_start(recipe_id)
+    return response
 
 
 @installation_router.get("/install_done/{recipe_id}")
-@installation_router.get("/install/done/{recipe_id}/{fqdn}")
-def get_install_done(recipe_id: int, _):
-    pass
+@installation_router.get("/install_done/{recipe_id}/{fqdn}")
+def get_install_done(recipe_id: int, fqdn: typing.Optional[str] = None):
+
+    logger.debug(f"install_done recipe_id=%s fqdn=%s", recipe_id, fqdn)
+
+    response = installation_service.installation_done(recipe_id)
+    return response
 
 
 @installation_router.get("/postinstall_done/{recipe_id}")
 def get_post_install_done(recipe_id: int):
-    pass
+
+    logger.debug("postinstall_done recipe_id=%s", recipe_id)
+
+    response = installation_service.installation_post_done(recipe_id)
+    return response
 
 
 @installation_router.get("/postreboot/{recipe_id}")
 def get_post_reboot(recipe_id: int):
-    pass
+    # XXX would be nice if we could limit this so that systems could only
+    # reboot themselves, instead of accepting any arbitrary recipe id
+    logger.debug("postreboot recipe_id=%s", recipe_id)
+
+    response = installation_service.installation_post_reboot(recipe_id)
+    return response
 
 
 @installation_router.get("/install_fail/{recipe_id}")
 def get_install_fail(recipe_id: int):
-    pass
+
+    logger.debug("install_fail for recipe_id=%s", recipe_id)
+
+    response = installation_service.installation_fail(recipe_id)
+    return response

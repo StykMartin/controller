@@ -36,3 +36,27 @@ def clear_netboot(fqdn: str) -> None:
         raise RuntimeError(f"sudo beaker-clear-netboot failed: {output.strip()}")
 
     logger.debug("clear_netboot %s completed", fqdn)
+
+
+# Proxy installation to Beaker Server
+# Former XMLRPC connection
+# Reply was True / False, based on internal conditions. Let's reply true for now
+# This will require ProxyHTTP auth setup with keep-alive + handle the expiration
+def installation_start(_: int):
+    return True
+
+
+def installation_done(*_):
+    return True
+
+
+def installation_post_done(_: int):
+    return True
+
+
+def installation_post_reboot(_: int):
+    return True
+
+
+def installation_fail(_: int):
+    return True
