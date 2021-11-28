@@ -1,26 +1,44 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Form
+from starlette.responses import Response
+
+from controller.recipe import model as recipe_model
+from controller.recipe import service as recipe_service
+from controller.response import XMLResponse
 
 recipe_router = APIRouter()
 
 
-@recipe_router.get("/{recipe_id}")
+@recipe_router.get("/{recipe_id}", response_class=XMLResponse)
 def get_recipe(recipe_id: int):
-    return recipe_id
+
+    response = recipe_service.get_recipe(recipe_id)
+    return response
 
 
 @recipe_router.get("/{recipe_id}/watchdog")
 def get_recipe_watchdog(recipe_id: int):
-    return recipe_id
+    """Return watchdog value in seconds for given Recipe."""
+
+    seconds = recipe_service.get_recipe_watchdog(recipe_id)
+
+    return recipe_model.WatchdogRead(seconds=seconds)
 
 
 @recipe_router.post("/{recipe_id}/watchdog")
-def post_recipe_watchdog(recipe_id: int):
-    pass
+def post_recipe_watchdog(recipe_id: int, seconds: int = Form(...)):
+
+    recipe_service.post_recipe_watchdog(recipe_id, seconds)
+
+    return Response(status_code=204)
 
 
 @recipe_router.post("/{recipe_id}/status")
-def post_recipe_status(recipe_id: int):
-    pass
+def post_recipe_status(recipe_id: int, status: str = Form(..., example="aborted", regex="aborted")):
+    """Allow aborting recipe via API.
+    All other operations are not allowed via API as they are managed in the scheduler.
+    """
+
+    return Response(status_code=204)
 
 
 @recipe_router.patch("/{recipe_id}/tasks/{task_id}")
