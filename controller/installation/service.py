@@ -1,7 +1,7 @@
 import logging
 import re
 import shlex
-import subprocess
+import subprocess  # nosec
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ def clear_netboot(fqdn: str) -> None:
     fqdn_command = CLEAR_NETBOOT_CMD.format(fqdn=fqdn)
     full_command = shlex.split(fqdn_command)
 
-    process = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    process = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)  # nosec
     output, _ = process.communicate()
 
     if process.returncode:
