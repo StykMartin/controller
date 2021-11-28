@@ -26,9 +26,6 @@ def clear_netboot(fqdn: str) -> None:
 
     logger.debug("clear_netboot %s", fqdn)
 
-    if not is_valid_fqdn(fqdn):
-        raise RuntimeError(f"{fqdn} is not valid FQDN.")
-
     fqdn_command = CLEAR_NETBOOT_CMD.format(fqdn=fqdn)
     full_command = shlex.split(fqdn_command)
 
