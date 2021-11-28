@@ -6,17 +6,25 @@ from controller.installation import service as installation_service
 
 installation_router = APIRouter()
 
+BROKEN_NETBOOT = HTTPException(
+    status_code=HTTP_400_BAD_REQUEST,
+    detail=f"Unable to perform clear netboot for given FQDN",
+)
+
 
 @installation_router.get("/nopxe/{fqdn}")
 def get_no_pxe(fqdn: str):
     """Called from kickstart post section to remove netboot entry."""
+
+    u_fqdn = fqdn.strip()
+
+    if not installation_service.is_valid_fqdn(u_fqdn):
+        raise BROKEN_NETBOOT
+
     try:
-        installation_service.clear_netboot(fqdn)
+        installation_service.clear_netboot(u_fqdn)
     except RuntimeError:
-        raise HTTPException(
-            status_code=HTTP_400_BAD_REQUEST,
-            detail=f"Unable to perform clear netboot for FQDN {fqdn}",
-        )
+        raise BROKEN_NETBOOT
     return Response(status_code=HTTP_204_NO_CONTENT)
 
 
