@@ -9,6 +9,7 @@ on:
 
 jobs:
   tests:
+    name: Unit tests (Py${{ matrix.python-version }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -53,7 +54,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   linter:
-    name: Linter '${{ matrix.tox_env }}'
+    name: Linter (${{ matrix.tox_env }})
     strategy:
       matrix:
         tox_env:
