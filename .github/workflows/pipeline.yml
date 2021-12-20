@@ -61,6 +61,7 @@ jobs:
           - black
           - bandit
           - isort
+          - mypy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1

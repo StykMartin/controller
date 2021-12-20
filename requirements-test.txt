@@ -1,4 +1,9 @@
 -r requirements.txt
-
+bandit
+black
+isort
+mypy
 pytest
 pytest-cov
+toml
+types-setuptools

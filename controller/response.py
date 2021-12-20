@@ -1,7 +1,7 @@
 from typing import Any, Generic, Type, TypeVar
 
 from pydantic import BaseModel
-from simplexml import dumps, loads
+from simplexml import dumps, loads  # type: ignore
 from starlette.requests import Request
 from starlette.responses import Response
 

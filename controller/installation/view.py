@@ -1,5 +1,5 @@
 import logging
-import typing
+from typing import TYPE_CHECKING, Optional
 
 from fastapi import APIRouter, HTTPException
 from starlette.responses import Response
@@ -18,7 +18,7 @@ BROKEN_NETBOOT = HTTPException(
 
 
 @installation_router.get("/nopxe/{fqdn}")
-def get_no_pxe(fqdn: str):
+def get_no_pxe(fqdn: str) -> Response:
     """Called from kickstart post section to remove netboot entry."""
 
     u_fqdn = fqdn.strip()
@@ -34,7 +34,9 @@ def get_no_pxe(fqdn: str):
 
 
 @installation_router.get("/install_start/{recipe_id}")
-def get_install_start(recipe_id: int = None):
+def get_install_start(recipe_id: int = None) -> bool:
+    if TYPE_CHECKING:
+        assert recipe_id is not None
 
     logger.debug(f"install_start recipe_id=%s", recipe_id)
 
@@ -44,7 +46,7 @@ def get_install_start(recipe_id: int = None):
 
 @installation_router.get("/install_done/{recipe_id}")
 @installation_router.get("/install_done/{recipe_id}/{fqdn}")
-def get_install_done(recipe_id: int, fqdn: typing.Optional[str] = None):
+def get_install_done(recipe_id: int, fqdn: Optional[str] = None) -> int:
 
     logger.debug(f"install_done recipe_id=%s fqdn=%s", recipe_id, fqdn)
 
@@ -53,7 +55,7 @@ def get_install_done(recipe_id: int, fqdn: typing.Optional[str] = None):
 
 
 @installation_router.get("/postinstall_done/{recipe_id}")
-def get_post_install_done(recipe_id: int):
+def get_post_install_done(recipe_id: int) -> bool:
 
     logger.debug("postinstall_done recipe_id=%s", recipe_id)
 
@@ -62,7 +64,7 @@ def get_post_install_done(recipe_id: int):
 
 
 @installation_router.get("/postreboot/{recipe_id}")
-def get_post_reboot(recipe_id: int):
+def get_post_reboot(recipe_id: int) -> bool:
     # XXX would be nice if we could limit this so that systems could only
     # reboot themselves, instead of accepting any arbitrary recipe id
     logger.debug("postreboot recipe_id=%s", recipe_id)
@@ -72,7 +74,7 @@ def get_post_reboot(recipe_id: int):
 
 
 @installation_router.get("/install_fail/{recipe_id}")
-def get_install_fail(recipe_id: int):
+def get_install_fail(recipe_id: int) -> bool:
 
     logger.debug("install_fail for recipe_id=%s", recipe_id)
 

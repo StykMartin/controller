@@ -4,3 +4,20 @@ target-version = ['py38']
 
 [tool.isort]
 profile = "black"
+
+[tool.mypy]
+files = "."
+exclude = 'tests/*'
+
+# 'strict = true' is equivalent to the following:
+check_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_subclassing_any = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.bandit]
+skips = ["B101"]

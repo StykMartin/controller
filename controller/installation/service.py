@@ -1,7 +1,9 @@
 import logging
+import os
 import re
 import shlex
 import subprocess  # nosec
+from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +19,7 @@ VALID_FQDN_REGEX = (
 regex_compiled = re.compile(VALID_FQDN_REGEX)
 
 
-def is_valid_fqdn(fqdn):
+def is_valid_fqdn(fqdn: str) -> Optional[re.Match]:
     return regex_compiled.search(fqdn)
 
 
@@ -33,7 +35,7 @@ def clear_netboot(fqdn: str) -> None:
     output, _ = process.communicate()
 
     if process.returncode:
-        raise RuntimeError(f"sudo beaker-clear-netboot failed: {output.strip()}")
+        raise RuntimeError(f"sudo beaker-clear-netboot failed: {os.fsdecode(output.strip())}")
 
     logger.debug("clear_netboot %s completed", fqdn)
 
@@ -42,21 +44,21 @@ def clear_netboot(fqdn: str) -> None:
 # Former XMLRPC connection
 # Reply was True / False, based on internal conditions. Let's reply true for now
 # This will require ProxyHTTP auth setup with keep-alive + handle the expiration
-def installation_start(_: int):
+def installation_start(_: int) -> bool:
     return True
 
 
-def installation_done(*_):
+def installation_done(*_: Any) -> bool:
     return True
 
 
-def installation_post_done(_: int):
+def installation_post_done(_: int) -> bool:
     return True
 
 
-def installation_post_reboot(_: int):
+def installation_post_reboot(_: int) -> bool:
     return True
 
 
-def installation_fail(_: int):
+def installation_fail(_: int) -> bool:
     return True
