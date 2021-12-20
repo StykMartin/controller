@@ -5,5 +5,5 @@ health_router = APIRouter()
 
 @health_router.get("/")
 @health_router.head("/")
-def get_health():
+def get_health() -> str:
     return "Healthy!"
